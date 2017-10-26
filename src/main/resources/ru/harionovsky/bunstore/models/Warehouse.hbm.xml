@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24.10.2017 16:31:30 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ru.harionovsky.bunstore.models.Warehouse" table="WAREHOUSE" schema="BUN" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="wareid" type="int">
+            <column name="WAREID" not-null="true" />
+        </property>
+        <property name="quantity" type="int">
+            <column name="QUANTITY" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

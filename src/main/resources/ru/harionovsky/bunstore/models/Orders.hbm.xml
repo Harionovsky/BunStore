@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24.10.2017 16:31:30 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ru.harionovsky.bunstore.models.Orders" table="ORDERS" schema="BUN" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="fio" type="string">
+            <column name="FIO" length="200" not-null="true" />
+        </property>
+        <property name="fhone" type="string">
+            <column name="FHONE" length="20" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="ADDRESS" length="200" not-null="true" />
+        </property>
+        <property name="isdone" type="java.lang.Boolean">
+            <column name="ISDONE" />
+        </property>
+    </class>
+</hibernate-mapping>
