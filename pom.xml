@@ -12,7 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate-version>5.2.2.Final</hibernate-version><!--4.2.8-->
+        <hibernate-version>5.1.10.Final</hibernate-version><!--4.2.8-->
         <spring-version>4.0.2.RELEASE</spring-version>
         <derby-version>10.12.1.1</derby-version>
     </properties>
@@ -54,6 +54,11 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.1.Final</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

@@ -1,5 +1,5 @@
 package ru.harionovsky.bunstore.models;
-// Generated 24.10.2017 16:31:27 by Hibernate Tools 4.3.1
+// Generated 27.10.2017 11:14:31 by Hibernate Tools 4.3.1
 
 
 

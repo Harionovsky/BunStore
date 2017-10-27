@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.harionovsky.bunstore.util;
+package ru.harionovsky.bunstore.utils;
 
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -26,7 +26,7 @@ public class BunStoreContext {
     }
     */
     public BunStoreContext() {
-        Wares = new DatabaseSet<>(Ware.class, "WARES");
+        Wares = new DatabaseSet<>(Ware.class, "Ware");
     }
     
     /*

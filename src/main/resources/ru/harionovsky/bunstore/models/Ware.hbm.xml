@@ -3,19 +3,19 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 27.10.2017 11:14:31 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ru.harionovsky.bunstore.models.Reserve" table="RESERVE" schema="BUN" optimistic-lock="version">
+    <class name="ru.harionovsky.bunstore.models.Ware" table="WARE" schema="BUN" optimistic-lock="version">
         <id name="id" type="int">
             <column name="ID" />
             <generator class="native" />
         </id>
-        <property name="wareid" type="int">
-            <column name="WAREID" not-null="true" />
+        <property name="code" type="string">
+            <column name="CODE" length="20" not-null="true" />
         </property>
-        <property name="orderid" type="int">
-            <column name="ORDERID" not-null="true" />
+        <property name="name" type="string">
+            <column name="NAME" length="50" not-null="true" />
         </property>
-        <property name="quantity" type="int">
-            <column name="QUANTITY" not-null="true" />
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="200" />
         </property>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,5 @@
 package ru.harionovsky.bunstore.models;
-// Generated 24.10.2017 16:31:27 by Hibernate Tools 4.3.1
+// Generated 27.10.2017 11:14:31 by Hibernate Tools 4.3.1
 
 
 
@@ -11,7 +11,7 @@ public class Orders  implements java.io.Serializable {
 
      private int id;
      private String fio;
-     private String fhone;
+     private String phone;
      private String address;
      private Boolean isdone;
 
@@ -19,16 +19,16 @@ public class Orders  implements java.io.Serializable {
     }
 
 	
-    public Orders(int id, String fio, String fhone, String address) {
+    public Orders(int id, String fio, String phone, String address) {
         this.id = id;
         this.fio = fio;
-        this.fhone = fhone;
+        this.phone = phone;
         this.address = address;
     }
-    public Orders(int id, String fio, String fhone, String address, Boolean isdone) {
+    public Orders(int id, String fio, String phone, String address, Boolean isdone) {
        this.id = id;
        this.fio = fio;
-       this.fhone = fhone;
+       this.phone = phone;
        this.address = address;
        this.isdone = isdone;
     }
@@ -47,12 +47,12 @@ public class Orders  implements java.io.Serializable {
     public void setFio(String fio) {
         this.fio = fio;
     }
-    public String getFhone() {
-        return this.fhone;
+    public String getPhone() {
+        return this.phone;
     }
     
-    public void setFhone(String fhone) {
-        this.fhone = fhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     public String getAddress() {
         return this.address;

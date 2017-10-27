@@ -26,7 +26,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
+                    <td>${dd}</td>
                     <td></td>
                     <td></td>
                     <td></td>

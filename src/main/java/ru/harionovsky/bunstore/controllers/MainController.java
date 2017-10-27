@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.harionovsky.bunstore.models.Ware;
-import ru.harionovsky.bunstore.util.BunStoreContext;
+import ru.harionovsky.bunstore.utils.BunStoreContext;
 
 /**
  *
@@ -44,8 +44,6 @@ public class MainController {
     public ModelAndView ware(Model model/*@PathVariable("page") String Name2*/) {
         //@RequestParam(value = "name", required = false, defaultValue = "World") String name
         ModelAndView mav = new ModelAndView("ware");
-        
-        int dd = dbBunStore.Wares.all().size();
       
         return mav;
     }

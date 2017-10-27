@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.harionovsky.bunstore.util;
+package ru.harionovsky.bunstore.utils;
 
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -37,7 +37,7 @@ public class DatabaseSet<TEntity> {
     }
     
     
-    public Integer add(TEntity objNew) {
+    public Integer insert(TEntity objNew) {
         Session objS = HibernateUtil.getFactory().openSession();
         Transaction objT = null;
         try {
@@ -54,12 +54,27 @@ public class DatabaseSet<TEntity> {
     }
     
     
-    public void save(TEntity objSave) {
+    public void update(TEntity objSave) {
         Session objS = HibernateUtil.getFactory().openSession();
         Transaction objT = null;
         try {
             objT = objS.beginTransaction();
             objS.update(objSave);
+            objT.commit();
+        }
+        catch (HibernateException objE) {
+            if (objT != null)
+                objT.rollback();
+        }
+    }
+    
+    
+    public void delete(TEntity objRemove) {
+        Session objS = HibernateUtil.getFactory().openSession();
+        Transaction objT = null;
+        try {
+            objT = objS.beginTransaction();
+            objS.delete(objRemove);
             objT.commit();
         }
         catch (HibernateException objE) {
