@@ -4,6 +4,7 @@
     Author     : Harionovsky
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,8 @@
     </head>
     <body>
         <h2>Склад</h2>
+        <a href="warehouse/inc">Поставка</a>
+        <a href="warehouse/dec">Списание</a>
         <table border="1">
             <thead>
                 <tr>
@@ -23,12 +26,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <c:forEach var="itemWH" items="${listWH}" >
+                    <tr>
+                        <td><c:out value="${itemWH[0]}"/></td>
+                        <td><c:out value="${itemWH[1]}"/></td>
+                        <td><c:out value="${itemWH[2]}"/></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
+        <td><a href="ware">Номенклатура</a></td>
     </body>
 </html>

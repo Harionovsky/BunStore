@@ -5,14 +5,9 @@
  */
 package ru.harionovsky.bunstore.controllers;
 
-import java.util.List;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.harionovsky.bunstore.models.Ware;
-import ru.harionovsky.bunstore.utils.BunStoreContext;
 
 /**
  *
@@ -21,12 +16,6 @@ import ru.harionovsky.bunstore.utils.BunStoreContext;
 @Controller
 public class MainController {
     
-    private final BunStoreContext dbBunStore;
-    
-    
-    public MainController() {
-        dbBunStore = new BunStoreContext();
-    }
 
     
     @RequestMapping("/home")
@@ -46,9 +35,9 @@ public class MainController {
 //    }
 
     
-    
+    /*
     @RequestMapping("/warehouse")
     public ModelAndView warehouse() {
         return new ModelAndView("warehouse");
-    }
+    }*/
 }

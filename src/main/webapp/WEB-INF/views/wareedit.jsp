@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="icon" href="img/cookies.png" type="image/png" />
+        <link rel="icon" href="../img/cookies.png" type="image/png" />
         <title>${title}</title>
     </head>
     <body>
@@ -18,16 +18,16 @@
             <input id="ID" name="ID" type="hidden" value="${id}">
             <table>
                 <tr>
-                    <td>Код</td>
+                    <td>Артикул</td>
                     <td><input id="Code" name="Code" type="text" value="${code}"></td>
                 </tr>
                 <tr>
-                    <td>Название</td>
+                    <td>Наименование</td>
                     <td><input id="Name" name="Name" type="text" value="${name}"></td>
                 </tr>
                 <tr>
                     <td>Описание</td>
-                    <td><input id="Description" name="Description" type="text" value="${desc}"></td>
+                    <td><textarea id="Description" name="Description">${desc}</textarea>
                 </tr>
                 <tr>
                     <td><a href="../ware">Отмена</a></td>

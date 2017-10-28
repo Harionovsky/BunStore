@@ -31,10 +31,10 @@ public class WareController extends BaseController {
     
     @RequestMapping("/add")
     public ModelAndView wareAdd() {
-        ModelAndView mvWareAdd = new ModelAndView("wareedit");
-        mvWareAdd.addObject("title", "Добавление товара");
-        mvWareAdd.addObject("act", "add");
-        return mvWareAdd;
+        ModelAndView mvWareEdit = new ModelAndView("wareedit");
+        mvWareEdit.addObject("title", "Добавление нового товара");
+        mvWareEdit.addObject("act", "add");
+        return mvWareEdit;
     }
     
     

@@ -82,6 +82,29 @@ public class DatabaseSet<TEntity> {
                 objT.rollback();
         }
     }
+
+
+    public TEntity first(String sCond) {
+        Session objS = HibernateUtil.getFactory().openSession();
+        try {
+            List<TEntity> listObj = objS.createQuery("from " + sTableName + " where " + sCond).list();
+            return (listObj.size() > 0 ? listObj.get(0) : null);
+        }
+        catch (HibernateException objE) {
+            return null;
+        }
+    }
+    
+    
+    public List<TEntity> where(String sCond) {
+        Session objS = HibernateUtil.getFactory().openSession();
+        try {
+            return objS.createQuery("from " + sTableName + " where " + sCond).list();
+        }
+        catch (HibernateException objE) {
+            return null;
+        }
+    }
     
     
     public List<TEntity> all() {

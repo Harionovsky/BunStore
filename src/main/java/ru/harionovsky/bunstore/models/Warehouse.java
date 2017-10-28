@@ -21,6 +21,10 @@ public class Warehouse  implements java.io.Serializable {
        this.wareid = wareid;
        this.quantity = quantity;
     }
+    public Warehouse(int wareid, int quantity) {
+       this.wareid = wareid;
+       this.quantity = quantity;
+    }
    
     public int getId() {
         return this.id;
