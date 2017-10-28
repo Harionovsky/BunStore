@@ -16,11 +16,24 @@
     <body>
         <h2>Интернет-магазин булочек</h2>
         <table border="1">
-            <c:forEach var="itemWare" items="${listWare}" >
+            <c:forEach var="itemW" items="${listW}" >
                 <tr>
                     <td>
-                        <b><c:out value="${itemWare.getName()}"/></b> <i>на складе много</i><br>
-                        <c:out value="${itemWare.getDescription()}"/><br>
+                        <b><c:out value="${itemW[0]}"/></b>
+                        <c:set var="available" value="${itemW[2]}"/>                        
+                        <c:choose>
+                            <c:when test="${available == 2}">
+                                <i><font color="green">на складе много</font></i>
+                            </c:when>
+                            <c:when test="${available == 1}">
+                                <i><font color="orange">на складе мало</font></i>
+                            </c:when>
+                            <c:otherwise>
+                                <i><font color="red">нет на складе</font></i>
+                            </c:otherwise>
+                        </c:choose>
+                        <br>
+                        <c:out value="${itemW[1]}"/>
                     </td>
                     <td>
                         <button type="button">В корзину</button>

@@ -37,6 +37,6 @@
                 </c:forEach>
             </tbody>
         </table>
-        <td><a href="ware">Номенклатура</a></td>
+        <td><a href="ware">Товары</a></td>
     </body>
 </html>
