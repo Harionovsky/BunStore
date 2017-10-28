@@ -22,7 +22,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Товар</th>
-                    <th>Количество</th>
+                    <th>Общее кол-во</th>
+                    <th>В резерве</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@
                         <td><c:out value="${itemWH[0]}"/></td>
                         <td><c:out value="${itemWH[1]}"/></td>
                         <td><c:out value="${itemWH[2]}"/></td>
+                        <td><c:out value="${itemWH[3]}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>

@@ -31,10 +31,11 @@ public class WarehouseController extends BaseController {
         for (Warehouse itemWH : listWarehouse) {
             Ware elemWare = dbBS.Ware.find(itemWH.getWareid());
             if (elemWare != null) {
-                String[] arrItem = new String[3];
+                String[] arrItem = new String[4];
                 arrItem[0] = "" + itemWH.getId();
                 arrItem[1] = "(" + elemWare.getCode() + ") " + elemWare.getName();
                 arrItem[2] = "" + itemWH.getQuantity();
+                arrItem[3] = "";
                 listWH.add(arrItem);                
             }
         }

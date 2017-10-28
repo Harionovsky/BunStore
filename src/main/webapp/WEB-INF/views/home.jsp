@@ -4,6 +4,7 @@
     Author     : Harionovsky
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,19 @@
         <title>Интернет-магазин булочек</title>
     </head>
     <body>
-        <h3>Приветствуем вас в нашем интернет-магазине!</h3>
-        <h4>Здесь вы можете выбрать интересующую вас булочку и оформить доставку</h4>
+        <h2>Интернет-магазин булочек</h2>
+        <table border="1">
+            <c:forEach var="itemWare" items="${listWare}" >
+                <tr>
+                    <td>
+                        <b><c:out value="${itemWare.getName()}"/></b> <i>на складе много</i><br>
+                        <c:out value="${itemWare.getDescription()}"/><br>
+                    </td>
+                    <td>
+                        <button type="button">В корзину</button>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </body>
 </html>
