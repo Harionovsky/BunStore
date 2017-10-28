@@ -29,6 +29,11 @@ public class Ware  implements java.io.Serializable {
        this.name = name;
        this.description = description;
     }
+    public Ware(String code, String name, String description) {
+       this.code = code;
+       this.name = name;
+       this.description = description;
+    }
    
     public int getId() {
         return this.id;

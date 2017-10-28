@@ -5,11 +5,7 @@
  */
 package ru.harionovsky.bunstore.controllers;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +36,15 @@ public class MainController {
     }
     
     
-    @RequestMapping(value = "/ware", method = RequestMethod.GET)
-    public ModelAndView ware(Model model/*@PathVariable("page") String Name2*/) {
-        //@RequestParam(value = "name", required = false, defaultValue = "World") String name
-        ModelAndView mav = new ModelAndView("ware");
-      
-        return mav;
-    }
+//    @RequestMapping("/ware")
+//    public ModelAndView ware(Model model/*@PathVariable("page") String Name2*/) {
+//        //@RequestParam(value = "name", required = false, defaultValue = "World") String name
+//        ModelAndView mav = new ModelAndView("ware");
+//        List<Ware> listWare = dbBunStore.Ware.all();
+//        mav.addObject("listWare", listWare);
+//        return mav;
+//    }
+
     
     
     @RequestMapping("/warehouse")

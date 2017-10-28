@@ -5,9 +5,6 @@
  */
 package ru.harionovsky.bunstore.utils;
 
-import java.util.List;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import ru.harionovsky.bunstore.models.*;
 
 /**
@@ -16,29 +13,16 @@ import ru.harionovsky.bunstore.models.*;
  */
 public class BunStoreContext {
     
-    public DatabaseSet<Ware> Wares;
-    /*public DatabaseSet<WarehouseEntity> Warehouses;
-    public DatabaseSet<ReserveEntity> Reserves;
-    public DatabaseSet<OrderEntity> Orders;*/
-    /*
-    static {
-        Wares = new DatabaseSet<Ware>();
-    }
-    */
+    public DatabaseSet<Orders> Order;
+    public DatabaseSet<Reserve> Reserve;
+    public DatabaseSet<Ware> Ware;
+    public DatabaseSet<Warehouse> Warehouse;
+
+
     public BunStoreContext() {
-        Wares = new DatabaseSet<>(Ware.class, "Ware");
+        Order = new DatabaseSet<>(Orders.class, "Orders");
+        Reserve = new DatabaseSet<>(Reserve.class, "Reserve");
+        Ware = new DatabaseSet<>(Ware.class, "Ware");
+        Warehouse = new DatabaseSet<>(Warehouse.class, "Warehouse");
     }
-    
-    /*
-    public List<Ware> AllWare() {
-                Session objS = HibernateUtil.getFactory().openSession();
-        try {
-            List<Ware> wares;
-            wares = objS.createQuery("from WARES").list();
-            return wares;
-        }
-        catch (HibernateException objE) {
-            return null;
-        }
-    }*/
 }

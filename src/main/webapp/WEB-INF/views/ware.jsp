@@ -4,16 +4,18 @@
     Author     : Harionovsky
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="img/cookies.png" type="image/png" />
         <title>Товары</title>
     </head>
     <body>
         <h2>Товары</h2>
-        <input type="button" value="Добавить" />
+        <a href="ware/add">Добавить</a>
         <table border="1">
             <thead>
                 <tr>
@@ -25,14 +27,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>${dd}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <c:forEach var="itemWare" items="${listWare}" >
+                    <tr>
+                        <td><c:out value="${itemWare.getId()}"/></td>
+                        <td><c:out value="${itemWare.getCode()}"/></td>
+                        <td><c:out value="${itemWare.getName()}"/></td>
+                        <td><c:out value="${itemWare.getDescription()}"/></td>
+                        <td>
+                            <a href="ware/edit?id=${itemWare.getId()}">Изменить</a>
+                            <a href="ware/delete?id=${itemWare.getId()}">Удалить</a>
+                        </td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
+        <td><a href="warehouse">Склад</a></td>
     </body>
 </html>
