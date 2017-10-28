@@ -87,7 +87,7 @@ public class DatabaseSet<TEntity> {
     public TEntity first(String sCond) {
         Session objS = HibernateUtil.getFactory().openSession();
         try {
-            List<TEntity> listObj = objS.createQuery("from " + sTableName + " where " + sCond).list();
+            List<TEntity> listObj = objS.createQuery("from " + sTableName + " where " + sCond + " order by ID").list();
             return (listObj.size() > 0 ? listObj.get(0) : null);
         }
         catch (HibernateException objE) {
@@ -99,7 +99,7 @@ public class DatabaseSet<TEntity> {
     public List<TEntity> where(String sCond) {
         Session objS = HibernateUtil.getFactory().openSession();
         try {
-            return objS.createQuery("from " + sTableName + " where " + sCond).list();
+            return objS.createQuery("from " + sTableName + " where " + sCond + " order by ID").list();
         }
         catch (HibernateException objE) {
             return null;
@@ -110,7 +110,7 @@ public class DatabaseSet<TEntity> {
     public List<TEntity> all() {
         Session objS = HibernateUtil.getFactory().openSession();
         try {
-            return objS.createQuery("from " + sTableName).list();
+            return objS.createQuery("from " + sTableName + " order by ID").list();
         }
         catch (HibernateException objE) {
             return null;
