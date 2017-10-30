@@ -37,7 +37,9 @@
                         <c:out value="${itemW[2]}"/>
                     </td>
                     <td>
-                        <a href="home/put?id=${itemW[0]}">В корзину</a>
+                        <c:if test="${available > 0}">
+                            <a href="home/put?id=${itemW[0]}">В корзину</a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
