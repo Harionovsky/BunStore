@@ -60,7 +60,7 @@ public class WarehouseController extends BaseController {
     @RequestMapping(value = "/inc", method = RequestMethod.POST)
     public ModelAndView warehouseIncrement(int WareID, int Quantity) {
         Ware elemWare = dbBS.Ware.find(WareID);
-        if (elemWare != null) {
+        if (elemWare != null && Quantity > 0) {
             Warehouse elemWarehouse = dbBS.Warehouse.first("WareID = " + WareID);
             if (elemWarehouse == null) {
                 elemWarehouse = new Warehouse(WareID, Quantity);
@@ -89,7 +89,7 @@ public class WarehouseController extends BaseController {
     @RequestMapping(value = "/dec", method = RequestMethod.POST)
     public ModelAndView warehouseDecrement(int WareID, int Quantity) {
         Ware elemWare = dbBS.Ware.find(WareID);
-        if (elemWare != null) {
+        if (elemWare != null && Quantity > 0) {
             Warehouse elemWarehouse = dbBS.Warehouse.first("WareID = " + WareID);
             if (elemWarehouse != null) {
                 if (elemWarehouse.getQuantity() > Quantity) {

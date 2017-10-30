@@ -40,7 +40,7 @@ public class HomeController extends BaseController {
             for (Warehouse itemWH : listWH) {
                 iCount += itemWH.getQuantity();
             }
-            arrItem[2] = (iCount == 0 ? "0" : (iCount < 10 ? "1" : "2"));
+            arrItem[2] = (iCount > 9 ? "2" : (iCount > 0 ? "1" : "0"));
 
             listW.add(arrItem);                
         }
