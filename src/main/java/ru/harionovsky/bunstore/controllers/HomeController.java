@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.harionovsky.bunstore.models.Ware;
 import ru.harionovsky.bunstore.models.Warehouse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import ru.harionovsky.bunstore.utils.Basket;
 
 /**
  *
@@ -22,34 +25,43 @@ import ru.harionovsky.bunstore.models.Warehouse;
 public class HomeController extends BaseController {
     
     @RequestMapping
-    public ModelAndView home() {
+    public ModelAndView home(HttpServletRequest objRequest) {
         ModelAndView mvWare = new ModelAndView("home");
         List<Ware> listWare = dbBS.Ware.all();
-        //mvWare.addObject("listWare", listWare);
         
         List<String[]> listW = new ArrayList<>(listWare.size());
         int iCount;
 
         for (Ware itemW : listWare) {
-            String[] arrItem = new String[3];
-            arrItem[0] = itemW.getName();
-            arrItem[1] = itemW.getDescription();
+            String[] arrItem = new String[4];
+            arrItem[0] = "" + itemW.getId();
+            arrItem[1] = itemW.getName();
+            arrItem[2] = itemW.getDescription();
             
             List<Warehouse> listWH = dbBS.Warehouse.where("WareID = " + itemW.getId());
             iCount = 0;
             for (Warehouse itemWH : listWH) {
                 iCount += itemWH.getQuantity();
             }
-            arrItem[2] = (iCount > 9 ? "2" : (iCount > 0 ? "1" : "0"));
+            arrItem[3] = (iCount > 9 ? "2" : (iCount > 0 ? "1" : "0"));
 
             listW.add(arrItem);                
         }
 
         mvWare.addObject("listW", listW);
         
-        
+        Basket objBasket = new Basket(objRequest);
+        mvWare.addObject("inBasket", objBasket.size());
         
         return mvWare;
+    }
+    
+    
+    @RequestMapping("/put")
+    public ModelAndView put(int id, HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        Basket objBasket = new Basket(objRequest, objResponse);
+        objBasket.put(id);
+        return new ModelAndView("redirect:/home");
     }
     
     

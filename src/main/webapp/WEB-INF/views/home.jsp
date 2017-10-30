@@ -15,12 +15,13 @@
     </head>
     <body>
         <h2>Интернет-магазин булочек</h2>
+        <a href="home/basket">Корзина (${inBasket})</a>
         <table border="1">
             <c:forEach var="itemW" items="${listW}" >
                 <tr>
                     <td>
-                        <b><c:out value="${itemW[0]}"/></b>
-                        <c:set var="available" value="${itemW[2]}"/>                        
+                        <b><c:out value="${itemW[1]}"/></b>
+                        <c:set var="available" value="${itemW[3]}"/>                        
                         <c:choose>
                             <c:when test="${available == 2}">
                                 <i><font color="green">на складе много</font></i>
@@ -33,10 +34,10 @@
                             </c:otherwise>
                         </c:choose>
                         <br>
-                        <c:out value="${itemW[1]}"/>
+                        <c:out value="${itemW[2]}"/>
                     </td>
                     <td>
-                        <button type="button">В корзину</button>
+                        <a href="home/put?id=${itemW[0]}">В корзину</a>
                     </td>
                 </tr>
             </c:forEach>
