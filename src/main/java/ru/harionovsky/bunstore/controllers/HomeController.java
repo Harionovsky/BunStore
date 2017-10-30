@@ -15,6 +15,7 @@ import ru.harionovsky.bunstore.models.Ware;
 import ru.harionovsky.bunstore.models.Warehouse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.harionovsky.bunstore.utils.Basket;
 
 /**
@@ -91,11 +92,35 @@ public class HomeController extends BaseController {
     }
     
     
-    @RequestMapping("/save")
-    public ModelAndView saveAndGo(String go, HttpServletRequest objRequest, HttpServletResponse objResponse) {
+    @RequestMapping("/del")
+    public ModelAndView del(int id, HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        Basket objBasket = new Basket(objRequest, objResponse);
+        objBasket.del(id);
+        return new ModelAndView("redirect:/home/basket");
+    }
+    
+    
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ModelAndView save(String[] Ware, String[] Count, HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        if (Ware.length == Count.length) {
+            StringBuilder strBuilder = new StringBuilder(Ware.length);
+            for (int i = 0; i < Ware.length; i++) {
+                if (Integer.parseInt(Count[i]) > 0) 
+                    strBuilder.append(Ware[i]).append("=").append(Count[i]).append(" ");
+            }
+            Basket objBasket = new Basket(objRequest, objResponse);
+            objBasket.save(strBuilder.toString());
+        }
+        return new ModelAndView("redirect:/home/order");
+    }
+
+
+    @RequestMapping("/order")
+    public ModelAndView order(HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        ModelAndView mvOrder = new ModelAndView("order");
         //Basket objBasket = new Basket(objRequest, objResponse);
         //objBasket.put(id);
-        return new ModelAndView("redirect:/" + go);
+        return mvOrder;
     }
     
     

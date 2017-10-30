@@ -15,19 +15,27 @@
     </head>
     <body>
         <h2>Корзина</h2>
-        <a href="save?go=home">Вернуться к покупкам</a>
-        <table border="1">
-            <c:forEach var="itemW" items="${listW}" >
+        <form action="save" method="post">
+            <table>
+                <c:forEach var="itemW" items="${listW}" >
+                    <tr>
+                        <td>
+                            <input id="Ware" name="Ware" type="hidden" value="${itemW[0]}">
+                            <c:out value="${itemW[1]}"/>
+                        </td>
+                        <td>
+                            <input id="Count" name="Count" value="${itemW[2]}"> шт.
+                        </td>
+                        <td>
+                            <a href="del?id=${itemW[0]}">Удалить</a>
+                        </td>
+                    </tr>
+                </c:forEach>
                 <tr>
-                    <td>
-                        <c:out value="${itemW[1]}"/>
-                    </td>
-                    <td>
-                        <input value="${itemW[2]}"> шт.
-                    </td>
+                    <td colspan="2"><a href="../home">Вернуться к покупкам</a></td>
+                    <td><input type="submit" value="Оформить заказ"></td>
                 </tr>
-            </c:forEach>
-        </table>
-        <a href="save?go=home/order">Оформить заказ</a>
+            </table>
+        </form>
     </body>
 </html>

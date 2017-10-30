@@ -75,4 +75,26 @@ public class Basket {
             objResponse.addCookie(objCookie);
         }
     }
+    
+    
+    public void del(int iWareID) {
+        if (sCookie != null) {
+            String[] arrBasket = sCookie.split(" ");
+            StringBuilder strBuilder = new StringBuilder(arrBasket.length - 1);
+            for (String itemB : arrBasket) {
+                if (itemB.startsWith(iWareID + "=") == false)
+                    strBuilder.append(itemB).append(" ");
+            }
+            this.save(strBuilder.toString());
+        }
+    }
+    
+    
+    public void save(String sCookieNew) {
+        if (objResponse != null) {
+            sCookie = sCookieNew;
+            Cookie objCookie = new Cookie("basket", sCookie);
+            objResponse.addCookie(objCookie);
+        }
+    }
 }
