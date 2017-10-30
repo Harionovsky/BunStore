@@ -43,9 +43,14 @@ public class Basket {
     }
     
     
+    public String[] all() {
+        return (sCookie != null ? sCookie.split(" ") : new String[0]);
+    }
+    
+    
     public void put(int iWareID) {
         if (objResponse != null) {
-            if (sCookie != null && sCookie.isEmpty() == false) {
+            if (sCookie != null) {
                 String[] arrBasket = sCookie.split(" ");
                 StringBuilder strBuilder = new StringBuilder(arrBasket.length);
                 boolean bNeedAdd = true;

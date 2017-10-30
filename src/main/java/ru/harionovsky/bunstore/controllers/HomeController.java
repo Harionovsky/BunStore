@@ -6,6 +6,7 @@
 package ru.harionovsky.bunstore.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,6 @@ public class HomeController extends BaseController {
     public ModelAndView home(HttpServletRequest objRequest) {
         ModelAndView mvWare = new ModelAndView("home");
         List<Ware> listWare = dbBS.Ware.all();
-        
         List<String[]> listW = new ArrayList<>(listWare.size());
         int iCount;
 
@@ -62,6 +62,40 @@ public class HomeController extends BaseController {
         Basket objBasket = new Basket(objRequest, objResponse);
         objBasket.put(id);
         return new ModelAndView("redirect:/home");
+    }
+    
+    
+    @RequestMapping("/basket")
+    public ModelAndView basket(HttpServletRequest objRequest) {
+        ModelAndView mvBasket = new ModelAndView("basket");
+        Basket objBasket = new Basket(objRequest);
+        List<String> listBasket = Arrays.asList(objBasket.all());
+        List<String[]> listW = new ArrayList<>(listBasket.size());
+
+        for (String itemB : listBasket) {
+            String[] arrLine = itemB.split("=");
+            int iWareID = Integer.parseInt(arrLine[0]);
+            int iCount = Integer.parseInt(arrLine[1]);
+            Ware elemWare = dbBS.Ware.find(iWareID);
+            if (elemWare != null) {
+                String[] arrItem = new String[3];
+                arrItem[0] = "" + elemWare.getId();
+                arrItem[1] = elemWare.getName();
+                arrItem[2] = "" + iCount;
+                listW.add(arrItem);
+            }
+        }
+        
+        mvBasket.addObject("listW", listW);
+        return mvBasket;
+    }
+    
+    
+    @RequestMapping("/save")
+    public ModelAndView saveAndGo(String go, HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        //Basket objBasket = new Basket(objRequest, objResponse);
+        //objBasket.put(id);
+        return new ModelAndView("redirect:/" + go);
     }
     
     
