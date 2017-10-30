@@ -113,13 +113,39 @@ public class HomeController extends BaseController {
         }
         return new ModelAndView("redirect:/home/order");
     }
-
+    
 
     @RequestMapping("/order")
     public ModelAndView order(HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        Basket objBasket = new Basket(objRequest, objResponse);
+        String[] arrBasket = objBasket.all();
+        for (String itemB : arrBasket) {
+            String[] arrLine = itemB.split("=");
+            int iWareID = Integer.parseInt(arrLine[0]);
+            int iCount = Integer.parseInt(arrLine[1]);
+            Ware elemWare = dbBS.Ware.find(iWareID);
+            if (elemWare != null) {
+                Warehouse elemWH = dbBS.Warehouse.first("WareID = " + iWareID);
+                if ((elemWH == null) || (elemWH.getQuantity() < iCount)) {
+                    ModelAndView mvImpossible = new ModelAndView("impossible");
+                    mvImpossible.addObject("message", "Извините, на складе нет товара \"" + elemWare.getName() + "\" в достаточном количестве");
+                    return mvImpossible;
+                }
+            }
+            else
+                objBasket.del(iWareID);
+        }
+        
+        if (objBasket.size() == 0) {
+            ModelAndView mvImpossible = new ModelAndView("impossible");
+            mvImpossible.addObject("message", "Корзина пуста");
+            return mvImpossible;
+        }
+        
         ModelAndView mvOrder = new ModelAndView("order");
-        //Basket objBasket = new Basket(objRequest, objResponse);
-        //objBasket.put(id);
+        
+        // ???????????
+        
         return mvOrder;
     }
     
