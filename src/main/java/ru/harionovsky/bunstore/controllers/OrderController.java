@@ -68,7 +68,7 @@ public class OrderController extends BaseController {
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView orderInsert(String FIO, String Phone, String Address, HttpServletRequest objRequest, HttpServletResponse objResponse) {
-        //Basket objBasket = new Basket(objRequest, objResponse);
+        Basket objBasket = new Basket(objRequest, objResponse);
         // TODO: проверяем количество
         Orders elemOrder = new Orders(FIO, Phone, Address);
         dbBS.Order.insert(elemOrder);
@@ -76,6 +76,13 @@ public class OrderController extends BaseController {
         // TODO: списываем количество из таблицы "Warehouse"
         // TODO: добавляем кол-во в таблицу "Reserve"
         // TODO: очищаем "куки"
-        return new ModelAndView("redirect:/home");
+        objBasket.save("");
+        return new ModelAndView("redirect:/order/thanks");
+    }
+    
+    
+    @RequestMapping("/thanks")
+    public ModelAndView thanks() {
+        return new ModelAndView("thanks");
     }
 }
