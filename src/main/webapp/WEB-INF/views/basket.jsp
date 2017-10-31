@@ -17,6 +17,9 @@
         <h2>Корзина</h2>
         <form action="save" method="post">
             <table>
+                <c:if test="${listW.size() == 0}">
+                    <p>Ваша корзина пуста</p>
+                </c:if>
                 <c:forEach var="itemW" items="${listW}" >
                     <tr>
                         <td>
@@ -33,7 +36,9 @@
                 </c:forEach>
                 <tr>
                     <td colspan="2"><a href="../home">Вернуться к покупкам</a></td>
-                    <td><input type="submit" value="Оформить заказ"></td>
+                    <c:if test="${listW.size() > 0}">
+                        <td><input type="submit" value="Оформить заказ"></td>
+                    </c:if>
                 </tr>
             </table>
         </form>

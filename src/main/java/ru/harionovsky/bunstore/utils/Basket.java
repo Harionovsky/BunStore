@@ -25,6 +25,8 @@ public class Basket {
             for (Cookie itemC : arrCookies) {
                 if (itemC.getName().equals("basket")) {
                     sCookie = itemC.getValue();
+                    if (sCookie.equals(""))
+                        sCookie = null;
                     break;
                 }
             }
@@ -82,7 +84,7 @@ public class Basket {
             String[] arrBasket = sCookie.split(" ");
             StringBuilder strBuilder = new StringBuilder(arrBasket.length - 1);
             for (String itemB : arrBasket) {
-                if (itemB.startsWith(iWareID + "=") == false)
+                if (itemB.startsWith(iWareID + "=") == false && itemB.equals("") == false)
                     strBuilder.append(itemB).append(" ");
             }
             this.save(strBuilder.toString());
@@ -92,9 +94,11 @@ public class Basket {
     
     public void save(String sCookieNew) {
         if (objResponse != null) {
-            sCookie = sCookieNew;
+            sCookie = (sCookieNew != null ? sCookieNew : "");
             Cookie objCookie = new Cookie("basket", sCookie);
             objResponse.addCookie(objCookie);
+            if (sCookie.equals(""))
+                sCookie = null;
         }
     }
 }

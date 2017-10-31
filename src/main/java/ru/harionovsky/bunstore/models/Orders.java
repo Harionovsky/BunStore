@@ -32,6 +32,11 @@ public class Orders  implements java.io.Serializable {
        this.address = address;
        this.isdone = isdone;
     }
+    public Orders(String fio, String phone, String address) {
+        this.fio = fio;
+        this.phone = phone;
+        this.address = address;
+    }
    
     public int getId() {
         return this.id;

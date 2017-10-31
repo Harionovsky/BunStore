@@ -15,13 +15,21 @@
     </head>
     <body>
         <h2>Интернет-магазин булочек</h2>
-        <a href="home/basket">Корзина (${inBasket})</a>
+        <c:set var="inbasket" value="${inBasket}"/>
+        <c:choose>
+            <c:when test="${inbasket > 0}">
+                <a href="home/basket">Корзина (${inBasket})</a>
+            </c:when>
+            <c:otherwise>
+                <a href="home/basket">Корзина пуста</a>
+            </c:otherwise>
+        </c:choose>
         <table border="1">
             <c:forEach var="itemW" items="${listW}" >
                 <tr>
                     <td>
                         <b><c:out value="${itemW[1]}"/></b>
-                        <c:set var="available" value="${itemW[3]}"/>                        
+                        <c:set var="available" value="${itemW[3]}"/>
                         <c:choose>
                             <c:when test="${available == 2}">
                                 <i><font color="green">на складе много</font></i>
