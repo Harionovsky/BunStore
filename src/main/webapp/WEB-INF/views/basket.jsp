@@ -15,7 +15,7 @@
     </head>
     <body>
         <h2>Корзина</h2>
-        <form action="save" method="post">
+        <form action="../order/add" method="post">
             <table>
                 <c:if test="${listW.size() == 0}">
                     <p>Ваша корзина пуста</p>

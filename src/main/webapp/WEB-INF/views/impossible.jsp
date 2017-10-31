@@ -15,6 +15,6 @@
     <body>
         <h3>Невозможно оформить заказ</h3>
         <p>${message}</p>
-        <a href="basket">Перейти в корзину</a>
+        <a href="../home/basket">Перейти в корзину</a>
     </body>
 </html>

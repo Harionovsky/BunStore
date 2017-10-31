@@ -14,9 +14,11 @@ import ru.harionovsky.bunstore.utils.BunStoreContext;
 public abstract class BaseController {
     
     protected final BunStoreContext dbBS;
+    protected final char sCookieSeparator;
     
     
     public BaseController() {
         dbBS = new BunStoreContext();
+        sCookieSeparator = ',';
     }
 }

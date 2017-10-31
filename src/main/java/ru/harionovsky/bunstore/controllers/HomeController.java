@@ -15,7 +15,6 @@ import ru.harionovsky.bunstore.models.Ware;
 import ru.harionovsky.bunstore.models.Warehouse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.RequestMethod;
 import ru.harionovsky.bunstore.utils.Basket;
 
 /**
@@ -99,7 +98,7 @@ public class HomeController extends BaseController {
         return new ModelAndView("redirect:/home/basket");
     }
     
-    
+    /*
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView save(String[] Ware, String[] Count, HttpServletRequest objRequest, HttpServletResponse objResponse) {
         if (Ware.length == Count.length) {
@@ -111,9 +110,9 @@ public class HomeController extends BaseController {
             Basket objBasket = new Basket(objRequest, objResponse);
             objBasket.save(strBuilder.toString());
         }
-        return new ModelAndView("redirect:/order");
+        return new ModelAndView("redirect:/order/add");
     }
-    
+    */
     
     @RequestMapping("/welcome")
     public ModelAndView welcome() {

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Harionovsky
  */
 public class Basket {
+
+    public static final String SEPARATOR = ",";
     
     private HttpServletResponse objResponse;
     private String sCookie;
@@ -25,12 +27,11 @@ public class Basket {
             for (Cookie itemC : arrCookies) {
                 if (itemC.getName().equals("basket")) {
                     sCookie = itemC.getValue();
-                    if (sCookie.equals(""))
-                        sCookie = null;
                     break;
                 }
             }
         }
+        sCookie = (sCookie == null ? "" : sCookie.trim());
     }
     
     
@@ -41,51 +42,55 @@ public class Basket {
     
     
     public int size() {
-        return (sCookie != null ? sCookie.split(" ").length : 0);
+        return (sCookie.isEmpty() ? 0 : sCookie.split(SEPARATOR).length);
     }
     
     
     public String[] all() {
-        return (sCookie != null ? sCookie.split(" ") : new String[0]);
+        return (sCookie.isEmpty() ? new String[0] : sCookie.split(SEPARATOR));
     }
     
     
     public void put(int iWareID) {
-        if (objResponse != null) {
-            if (sCookie != null) {
-                String[] arrBasket = sCookie.split(" ");
-                StringBuilder strBuilder = new StringBuilder(arrBasket.length);
-                boolean bNeedAdd = true;
-                for (String itemB : arrBasket) {
-                    if (itemB.startsWith(iWareID + "=")) {
-                        int iCount = Integer.parseInt(itemB.split("=")[1]);
-                        strBuilder.append(iWareID).append("=").append(++iCount).append(" ");
-                        bNeedAdd = false;
-                    }
-                    else
-                        strBuilder.append(itemB).append(" ");
+        String sResult;
+        if (sCookie.isEmpty())
+            sResult = iWareID + "=1";
+        else {
+            String[] arrBasket = sCookie.split(SEPARATOR);
+            StringBuilder strBuilder = new StringBuilder(arrBasket.length);
+            boolean bNeedAdd = true;
+            for (String itemB : arrBasket) {
+                if (strBuilder.length() > 0)
+                    strBuilder.append(SEPARATOR);
+                if (itemB.startsWith(iWareID + "=")) {
+                    int iCount = Integer.parseInt(itemB.split("=")[1]);
+                    strBuilder.append(iWareID).append("=").append(++iCount);
+                    bNeedAdd = false;
+                } else {
+                    strBuilder.append(itemB);
                 }
-                if (bNeedAdd) {
-                    strBuilder.append(iWareID).append("=1 ");
-                }
-                sCookie = strBuilder.toString();
             }
-            else
-                sCookie = iWareID + "=1 ";
-            
-            Cookie objCookie = new Cookie("basket", sCookie);
-            objResponse.addCookie(objCookie);
+            if (bNeedAdd) {
+                if (strBuilder.length() > 0)
+                    strBuilder.append(SEPARATOR);
+                strBuilder.append(iWareID).append("=1");
+            }
+            sResult = strBuilder.toString();
         }
+        this.save(sResult);
     }
     
     
     public void del(int iWareID) {
-        if (sCookie != null) {
-            String[] arrBasket = sCookie.split(" ");
+        if (sCookie.isEmpty() == false) {
+            String[] arrBasket = sCookie.split(SEPARATOR);
             StringBuilder strBuilder = new StringBuilder(arrBasket.length - 1);
             for (String itemB : arrBasket) {
-                if (itemB.startsWith(iWareID + "=") == false && itemB.equals("") == false)
-                    strBuilder.append(itemB).append(" ");
+                if (itemB.startsWith(iWareID + "=") == false) {
+                    if (strBuilder.length() > 0)
+                        strBuilder.append(SEPARATOR);
+                    strBuilder.append(itemB);
+                }
             }
             this.save(strBuilder.toString());
         }
@@ -93,12 +98,11 @@ public class Basket {
     
     
     public void save(String sCookieNew) {
+        sCookie = (sCookieNew == null ? "" : sCookieNew.trim());
         if (objResponse != null) {
-            sCookie = (sCookieNew != null ? sCookieNew : "");
             Cookie objCookie = new Cookie("basket", sCookie);
+            objCookie.setPath("/");
             objResponse.addCookie(objCookie);
-            if (sCookie.equals(""))
-                sCookie = null;
         }
     }
 }

@@ -24,40 +24,49 @@ import ru.harionovsky.bunstore.utils.Basket;
 @RequestMapping("/order")
 public class OrderController extends BaseController {
     
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView order(HttpServletRequest objRequest, HttpServletResponse objResponse) {
-        Basket objBasket = new Basket(objRequest, objResponse);
-        String[] arrBasket = objBasket.all();
-        for (String itemB : arrBasket) {
-            String[] arrLine = itemB.split("=");
-            int iWareID = Integer.parseInt(arrLine[0]);
-            int iCount = Integer.parseInt(arrLine[1]);
-            Ware elemWare = dbBS.Ware.find(iWareID);
-            if (elemWare != null) {
-                Warehouse elemWH = dbBS.Warehouse.first("WareID = " + iWareID);
-                if ((elemWH == null) || (elemWH.getQuantity() < iCount)) {
-                    ModelAndView mvImpossible = new ModelAndView("impossible");
-                    mvImpossible.addObject("message", "Извините, на складе нет товара \"" + elemWare.getName() + "\" в достаточном количестве");
-                    return mvImpossible;
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ModelAndView orderAdd(String[] Ware, String[] Count,
+            HttpServletRequest objRequest, HttpServletResponse objResponse) {
+        String sCookie = "";
+        int iWareID, iQuant;
+
+        if (Ware.length == Count.length) {
+            StringBuilder strBuilder = new StringBuilder(Ware.length);
+            for (int i = 0; i < Ware.length; i++) {
+                iQuant = Integer.parseInt(Count[i]);
+                iWareID = Integer.parseInt(Ware[i]);
+                Ware elemWare = dbBS.Ware.find(iWareID);
+                if (elemWare != null && iQuant > 0) {
+                    Warehouse elemWH = dbBS.Warehouse.first("WareID = " + iWareID);
+                    if ((elemWH == null) || (elemWH.getQuantity() < iQuant)) {
+                        ModelAndView mvImpossible = new ModelAndView("impossible");
+                        mvImpossible.addObject("message", "Извините, на складе нет товара \"" + elemWare.getName() + "\" в достаточном количестве");
+                        return mvImpossible;
+                    }
+                    else {
+                        if (strBuilder.length() > 0)
+                            strBuilder.append(Basket.SEPARATOR);
+                        strBuilder.append(Ware[i]).append("=").append(Count[i]);
+                    }
                 }
             }
-            else
-                objBasket.del(iWareID);
+            sCookie = strBuilder.toString();
         }
-        
-        if (objBasket.size() == 0) {
+
+        if (sCookie.isEmpty()) {
             ModelAndView mvImpossible = new ModelAndView("impossible");
             mvImpossible.addObject("message", "Корзина пуста");
             return mvImpossible;
         }
         
-        ModelAndView mvOrder = new ModelAndView("order");
+        Basket objBasket = new Basket(objRequest, objResponse);
+        objBasket.save(sCookie);
         
-        return mvOrder;
+        return new ModelAndView("orderedit");
     }
     
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView orderInsert(String FIO, String Phone, String Address, HttpServletRequest objRequest, HttpServletResponse objResponse) {
         //Basket objBasket = new Basket(objRequest, objResponse);
         // TODO: проверяем количество
@@ -65,7 +74,7 @@ public class OrderController extends BaseController {
         dbBS.Order.insert(elemOrder);
         // TODO: заполняем таблицу "OrderWare"
         // TODO: списываем количество из таблицы "Warehouse"
-        // TODO: добаляем кол-во в таблицу "Reserve"
+        // TODO: добавляем кол-во в таблицу "Reserve"
         // TODO: очищаем "куки"
         return new ModelAndView("redirect:/home");
     }
