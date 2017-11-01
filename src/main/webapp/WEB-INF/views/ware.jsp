@@ -41,6 +41,6 @@
                 </c:forEach>
             </tbody>
         </table>
-        <td><a href="warehouse">Склад</a></td>
+        <a href="warehouse">Склад</a>&nbsp;<a href="order">Заказы</a>
     </body>
 </html>

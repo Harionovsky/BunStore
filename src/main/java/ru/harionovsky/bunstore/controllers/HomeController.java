@@ -98,21 +98,6 @@ public class HomeController extends BaseController {
         return new ModelAndView("redirect:/home/basket");
     }
     
-    /*
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView save(String[] Ware, String[] Count, HttpServletRequest objRequest, HttpServletResponse objResponse) {
-        if (Ware.length == Count.length) {
-            StringBuilder strBuilder = new StringBuilder(Ware.length);
-            for (int i = 0; i < Ware.length; i++) {
-                if (Integer.parseInt(Count[i]) > 0) 
-                    strBuilder.append(Ware[i]).append("=").append(Count[i]).append(" ");
-            }
-            Basket objBasket = new Basket(objRequest, objResponse);
-            objBasket.save(strBuilder.toString());
-        }
-        return new ModelAndView("redirect:/order/add");
-    }
-    */
     
     @RequestMapping("/welcome")
     public ModelAndView welcome() {

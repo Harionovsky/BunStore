@@ -5,16 +5,15 @@
  */
 package ru.harionovsky.bunstore.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.harionovsky.bunstore.models.Orders;
-import ru.harionovsky.bunstore.models.Reserve;
-import ru.harionovsky.bunstore.models.Ware;
-import ru.harionovsky.bunstore.models.Warehouse;
+import ru.harionovsky.bunstore.models.*;
 import ru.harionovsky.bunstore.utils.Basket;
 
 /**
@@ -24,6 +23,43 @@ import ru.harionovsky.bunstore.utils.Basket;
 @Controller
 @RequestMapping("/order")
 public class OrderController extends BaseController {
+    
+    @RequestMapping
+    public ModelAndView order() {
+        ModelAndView mvOrder = new ModelAndView("order");
+        List<Orders> listOrder = dbBS.Order.where("IsDone = null", "ID desc");
+        List<String[]> listO = new ArrayList<>(listOrder.size());
+        List<Reserve> listReserve;
+        StringBuilder strBuilder;
+        Ware elemWare;
+
+        for (Orders itemO : listOrder) {
+            String[] arrItem = new String[5];
+            arrItem[0] = "" + itemO.getId();
+            arrItem[1] = itemO.getFio();
+            arrItem[2] = itemO.getPhone();
+            arrItem[3] = itemO.getAddress();
+
+            listReserve = dbBS.Reserve.where("OrderID = " + itemO.getId());
+            strBuilder = new StringBuilder(listReserve.size());
+            for (Reserve itemR : listReserve) {
+                elemWare = dbBS.Ware.find(itemR.getWareid());
+                if (elemWare != null) {
+                    if (strBuilder.length() > 0)
+                        strBuilder.append("; ");
+                    strBuilder.append("(").append(elemWare.getCode()).append(") ").append(elemWare.getName()).
+                            append(" = ").append(itemR.getQuantity()).append(" шт.");
+                }
+            }
+            arrItem[4] = strBuilder.toString();
+
+            listO.add(arrItem); 
+        }
+
+        mvOrder.addObject("listO", listO);
+        return mvOrder;
+    }    
+    
     
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView orderAdd(String[] Ware, String[] Count,

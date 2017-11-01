@@ -15,8 +15,7 @@
     </head>
     <body>
         <h2>Склад</h2>
-        <a href="warehouse/inc">Поставка</a>
-        <a href="warehouse/dec">Списание</a>
+        <a href="warehouse/inc">Поставка</a>&nbsp;<a href="warehouse/dec">Списание</a>
         <table border="1">
             <thead>
                 <tr>
@@ -37,6 +36,6 @@
                 </c:forEach>
             </tbody>
         </table>
-        <td><a href="ware">Товары</a></td>
+        <a href="ware">Товары</a>&nbsp;<a href="order">Заказы</a>
     </body>
 </html>

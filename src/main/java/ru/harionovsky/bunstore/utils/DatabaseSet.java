@@ -97,9 +97,14 @@ public class DatabaseSet<TEntity> {
     
     
     public List<TEntity> where(String sCond) {
+        return where(sCond, "ID");
+    }
+    
+    
+    public List<TEntity> where(String sCond, String sOrder) {
         Session objS = HibernateUtil.getFactory().openSession();
         try {
-            return objS.createQuery("from " + sTableName + " where " + sCond + " order by ID").list();
+            return objS.createQuery("from " + sTableName + " where " + sCond + " order by " + sOrder).list();
         }
         catch (HibernateException objE) {
             return null;
