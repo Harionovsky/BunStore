@@ -30,7 +30,7 @@ public class HomeController extends BaseController {
         ModelAndView mvWare = new ModelAndView("home");
         List<Ware> listWare = dbBS.Ware.all();
         List<String[]> listW = new ArrayList<>(listWare.size());
-        int iCount;
+        int iQuant;
 
         for (Ware itemW : listWare) {
             String[] arrItem = new String[4];
@@ -39,11 +39,11 @@ public class HomeController extends BaseController {
             arrItem[2] = itemW.getDescription();
             
             List<Warehouse> listWH = dbBS.Warehouse.where("WareID = " + itemW.getId());
-            iCount = 0;
+            iQuant = 0;
             for (Warehouse itemWH : listWH) {
-                iCount += itemWH.getQuantity();
+                iQuant += itemWH.getQuantity();
             }
-            arrItem[3] = (iCount > 9 ? "2" : (iCount > 0 ? "1" : "0"));
+            arrItem[3] = (iQuant > 9 ? "2" : (iQuant > 0 ? "1" : "0"));
 
             listW.add(arrItem);                
         }
