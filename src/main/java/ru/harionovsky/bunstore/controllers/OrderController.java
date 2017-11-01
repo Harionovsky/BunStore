@@ -27,7 +27,7 @@ public class OrderController extends BaseController {
     @RequestMapping
     public ModelAndView order() {
         ModelAndView mvOrder = new ModelAndView("order");
-        List<Orders> listOrder = dbBS.Order.where("IsDone = null", "ID desc");
+        List<Orders> listOrder = dbBS.Order.where("IsDone is null", "ID desc");
         List<String[]> listO = new ArrayList<>(listOrder.size());
         List<Reserve> listReserve;
         StringBuilder strBuilder;
@@ -55,7 +55,7 @@ public class OrderController extends BaseController {
 
             listO.add(arrItem); 
         }
-
+        
         mvOrder.addObject("listO", listO);
         return mvOrder;
     }    
@@ -155,6 +155,40 @@ public class OrderController extends BaseController {
         // Очищаем корзину
         objBasket.save("");
         return new ModelAndView("redirect:/order/thanks");
+    }
+    
+    
+    @RequestMapping("/cancel")
+    public ModelAndView orderCancel(int id) {
+        Orders elemOrder = dbBS.Order.find(id);
+        if (elemOrder != null) {
+            List<Reserve> listReserve = dbBS.Reserve.where("OrderID = " + elemOrder.getId());
+            for (Reserve itemR : listReserve) {
+                Warehouse elemWH = dbBS.Warehouse.first("WareID = " + itemR.getWareid());
+                if (elemWH == null) {
+                    elemWH = new Warehouse(itemR.getWareid(), itemR.getQuantity());
+                    dbBS.Warehouse.insert(elemWH);
+                }
+                else {
+                    elemWH.setQuantity(elemWH.getQuantity() + itemR.getQuantity());
+                    dbBS.Warehouse.update(elemWH);
+                }
+                dbBS.Reserve.delete(itemR);
+            }
+            dbBS.Order.delete(elemOrder);
+        }
+        return new ModelAndView("redirect:/order");
+    }
+    
+    
+    @RequestMapping("/done")
+    public ModelAndView orderDone(int id) {
+        Orders elemOrder = dbBS.Order.find(id);
+        if (elemOrder != null) {
+            elemOrder.setIsdone(true);
+            dbBS.Order.update(elemOrder);
+        }
+        return new ModelAndView("redirect:/order");
     }
     
     

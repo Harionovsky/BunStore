@@ -67,7 +67,7 @@ public class Orders  implements java.io.Serializable {
         this.address = address;
     }
     public Boolean getIsdone() {
-        return this.isdone;
+        return (this.isdone == null ? false : this.isdone);
     }
     
     public void setIsdone(Boolean isdone) {

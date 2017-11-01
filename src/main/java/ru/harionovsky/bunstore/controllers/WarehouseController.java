@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ru.harionovsky.bunstore.models.Orders;
 import ru.harionovsky.bunstore.models.Reserve;
 import ru.harionovsky.bunstore.models.Ware;
 import ru.harionovsky.bunstore.models.Warehouse;
@@ -28,6 +29,7 @@ public class WarehouseController extends BaseController {
         ModelAndView mvWarehouse = new ModelAndView("warehouse");
         List<Warehouse> listWarehouse = dbBS.Warehouse.all();
         List<String[]> listWH = new ArrayList<>(listWarehouse.size());
+        Orders elemOrder;
         int iReserve;
 
         for (Warehouse itemWH : listWarehouse) {
@@ -41,7 +43,9 @@ public class WarehouseController extends BaseController {
                 iReserve = 0;
                 List<Reserve> listReserve = dbBS.Reserve.where("WareID = " + elemWare.getId());
                 for (Reserve itemR : listReserve) {
-                    iReserve += itemR.getQuantity();
+                    elemOrder = dbBS.Order.find(itemR.getOrderid());
+                    if ((elemOrder != null) && (elemOrder.getIsdone() == false))
+                        iReserve += itemR.getQuantity();
                 }
                 arrItem[3] = "" + iReserve;
 

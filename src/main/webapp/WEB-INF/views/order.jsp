@@ -18,7 +18,7 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>№</th>
                     <th>ФИО</th>
                     <th>Телефон</th>
                     <th>Адрес</th>
@@ -34,7 +34,10 @@
                         <td><c:out value="${itemO[2]}"/></td>
                         <td><c:out value="${itemO[3]}"/></td>
                         <td><c:out value="${itemO[4]}"/></td>
-                        <td></td>
+                        <td>
+                            <a href="order/cancel?id=${itemO[0]}">Отменить</a>
+                            <a href="order/done?id=${itemO[0]}">Выполнен</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
