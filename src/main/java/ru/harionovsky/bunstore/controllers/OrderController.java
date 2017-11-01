@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.harionovsky.bunstore.models.Orders;
+import ru.harionovsky.bunstore.models.Reserve;
 import ru.harionovsky.bunstore.models.Ware;
 import ru.harionovsky.bunstore.models.Warehouse;
 import ru.harionovsky.bunstore.utils.Basket;
@@ -69,13 +70,53 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView orderInsert(String FIO, String Phone, String Address, HttpServletRequest objRequest, HttpServletResponse objResponse) {
         Basket objBasket = new Basket(objRequest, objResponse);
-        // TODO: проверяем количество
-        Orders elemOrder = new Orders(FIO, Phone, Address);
-        dbBS.Order.insert(elemOrder);
-        // TODO: заполняем таблицу "OrderWare"
-        // TODO: списываем количество из таблицы "Warehouse"
-        // TODO: добавляем кол-во в таблицу "Reserve"
-        // TODO: очищаем "куки"
+        String[] arrBasket = objBasket.all();
+        int[] arrWare = new int[arrBasket.length];
+        int[] arrQuant = new int[arrBasket.length];
+        Ware elemWare;
+        Warehouse elemWH;
+        Reserve elemReserve;
+        String[] arrLine;
+        int iWareID, iQuant;
+        boolean bIsEmpty = true;
+
+        // Проверяем количество и списываем его со склада
+        for (int i = 0; i < arrBasket.length; i++) {
+            arrLine = arrBasket[i].split("=");
+            iWareID = Integer.parseInt(arrLine[0]);
+            iQuant = Integer.parseInt(arrLine[1]);
+            elemWare = dbBS.Ware.find(iWareID);
+            if (elemWare != null && iQuant > 0) {
+                elemWH = dbBS.Warehouse.first("WareID = " + iWareID);
+                if ((elemWH != null) && (elemWH.getQuantity() >= iQuant)) {
+                    elemWH.setQuantity(elemWH.getQuantity() - iQuant);
+                    dbBS.Warehouse.update(elemWH);
+                    arrWare[i] = iWareID;
+                    arrQuant[i] = iQuant;
+                    bIsEmpty = false;
+                }
+                else {
+                    arrWare[i] = 0;
+                    arrQuant[i] = 0;
+                }
+            }
+        }
+        
+        // Создаём заявку и заносим количество в резерв
+        if (bIsEmpty == false) {
+            Orders elemOrder = new Orders(FIO, Phone, Address);
+            int iOrderID = dbBS.Order.insert(elemOrder);
+            
+            for (int i = 0; i < arrWare.length; i++) {
+                elemReserve = new Reserve();
+                elemReserve.setOrderid(iOrderID);
+                elemReserve.setWareid(arrWare[i]);
+                elemReserve.setQuantity(arrQuant[i]);
+                dbBS.Reserve.insert(elemReserve);
+            }
+        }
+
+        // Очищаем корзину
         objBasket.save("");
         return new ModelAndView("redirect:/order/thanks");
     }
