@@ -29,7 +29,7 @@
             <tbody>
                 <c:forEach var="itemO" items="${listO}" >
                     <tr>
-                        <td><c:out value="${itemO[0]}"/></td>
+                        <td align="center"><c:out value="${itemO[0]}"/></td>
                         <td><c:out value="${itemO[1]}"/></td>
                         <td><c:out value="${itemO[2]}"/></td>
                         <td><c:out value="${itemO[3]}"/></td>

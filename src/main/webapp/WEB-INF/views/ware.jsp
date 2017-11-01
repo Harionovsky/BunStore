@@ -29,8 +29,8 @@
             <tbody>
                 <c:forEach var="itemWare" items="${listWare}" >
                     <tr>
-                        <td><c:out value="${itemWare.getId()}"/></td>
-                        <td><c:out value="${itemWare.getCode()}"/></td>
+                        <td align="center"><c:out value="${itemWare.getId()}"/></td>
+                        <td align="center"><c:out value="${itemWare.getCode()}"/></td>
                         <td><c:out value="${itemWare.getName()}"/></td>
                         <td><c:out value="${itemWare.getDescription()}"/></td>
                         <td>

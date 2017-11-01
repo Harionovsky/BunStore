@@ -28,10 +28,10 @@
             <tbody>
                 <c:forEach var="itemWH" items="${listWH}" >
                     <tr>
-                        <td><c:out value="${itemWH[0]}"/></td>
+                        <td align="center"><c:out value="${itemWH[0]}"/></td>
                         <td><c:out value="${itemWH[1]}"/></td>
-                        <td><c:out value="${itemWH[2]}"/></td>
-                        <td><c:out value="${itemWH[3]}"/></td>
+                        <td align="right"><c:out value="${itemWH[2]}"/></td>
+                        <td align="right"><c:out value="${itemWH[3]}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>

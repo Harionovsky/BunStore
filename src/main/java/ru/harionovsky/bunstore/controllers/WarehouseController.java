@@ -44,7 +44,7 @@ public class WarehouseController extends BaseController {
                 List<Reserve> listReserve = dbBS.Reserve.where("WareID = " + elemWare.getId());
                 for (Reserve itemR : listReserve) {
                     elemOrder = dbBS.Order.find(itemR.getOrderid());
-                    if ((elemOrder != null) && (elemOrder.getIsdone() == false))
+                    if ((elemOrder != null) && (elemOrder.getIsdone() == null))
                         iReserve += itemR.getQuantity();
                 }
                 arrItem[3] = "" + iReserve;
